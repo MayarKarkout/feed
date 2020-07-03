@@ -25,6 +25,14 @@
 
 {% if feed.entries %}
 
+{% if nr_of_items %}
+<p> Number of items: {{nr_of_items}} </p>
+{% endif %}
+
+{% if nr_of_in_stock_items %}
+<p> Number of in-stock items: {{nr_of_in_stock_items}} </p>
+{% endif %}
+
 {% for entry in feed.entries %}
 
 <div class="card">

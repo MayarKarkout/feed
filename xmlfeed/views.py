@@ -35,10 +35,13 @@ def index(request):
             nr_of_items = product_feed.nr_of_items
             nr_of_in_stock_items = product_feed.nr_of_in_stock_items
 
+            labels_data = product_feed.get_custom_labels_data()
+
         return render(request, 'reader.html', {
             'feed': product_feed.feed,
             'nr_of_items': nr_of_items,
             'nr_of_in_stock_items': nr_of_in_stock_items,
+            'labels_data': labels_data
         })
 
     except exceptions.MissingSchema as exception:

@@ -23,7 +23,7 @@
 
 <h2>{{ feed.feed.title }}</h2>
 
-{% if feed.entries %}
+{% if custom_labels_data %}
 
 {% if nr_of_items %}
 <p> Number of items: {{nr_of_items}} </p>
@@ -33,30 +33,43 @@
 <p> Number of in-stock items: {{nr_of_in_stock_items}} </p>
 {% endif %}
 
-{% for entry in feed.entries %}
+{% for custom_label in custom_labels_data %}
+{% if custom_label.custom_label_values %}
 
 <div class="card">
+    <div class="row">
+        <div class="card-header">
+            {{ custom_label.custom_label }} labels:
+        </div>
 
-    <div class="card-header">
+        {% for label in custom_label.custom_label_values %}
 
-        Feed
 
+        <div class="column">
+            <div class="card">
+
+                <div class="card-header">
+
+                    {{ label.label_name }}
+
+                </div>
+
+                <div class="card-body">
+
+                    <h5 class="card-text">Number of items: {{ label.nr_of_items }}</h5>
+
+                    <p class="card-text">Number of items in stock: {{ label.nr_of_items_in_stock }}</p>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
     </div>
-
-    <div class="card-body">
-
-        <h5 class="card-title">Headline: {{ entry.title }}</h5>
-
-        <p class="card-text">Description: {{ entry.g_description }}</p>
-
-        <a href="{{ entry.link }}" class="btn btn-primary">Visit Link</a>
-
-    </div>
-
 </div>
 <!--</div><p>{{ entry.published }}</p>-->
 
-
+{% endif %}
 {% endfor %}
 
 {% endif %}

@@ -31,8 +31,8 @@ class ProductFeed:
                 nr_of_items = len(df_label_details)
                 nr_of_items_in_stock = sum(df_label_details['g_availability'] == 'in stock')
                 label_values = {'label_name': label_name,
-                                     'nr_of_items': nr_of_items,
-                                     'nr_of_items_in_stock': nr_of_items_in_stock}
+                                'nr_of_items': nr_of_items,
+                                'nr_of_items_in_stock': nr_of_items_in_stock}
                 labels_data.append(label_values)
 
         return labels_data
@@ -44,10 +44,12 @@ class ProductFeed:
                          if 'custom_label' in col]
 
         custom_labels_data = []
+        i = 0
         for custom_label in custom_labels:
             custom_label_values_list = self.get_labels_data(custom_label)
-            label_dict = {'custom_label': custom_label,
+            label_dict = {'custom_label': f'Custom label {i}',
                           'custom_label_values': custom_label_values_list}
             custom_labels_data.append(label_dict)
+            i = i+1
 
         return custom_labels_data

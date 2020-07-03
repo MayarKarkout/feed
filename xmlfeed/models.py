@@ -13,7 +13,9 @@ class ProductFeed:
     def count_in_stock_items(self):
         nr_of_in_stock_items = 0
         for entry in self.feed.entries:
-            if entry.g_availability == "in stock":
+            availability = entry.get("g_availability")
+            # Note: if 'g_availability' not in entry, 'availability' would be = None
+            if availability == "in stock":
                 nr_of_in_stock_items = nr_of_in_stock_items + 1
         return nr_of_in_stock_items
 

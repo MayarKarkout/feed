@@ -16,7 +16,7 @@ def index(request):
     try:
         url = request.GET.get("url")
         if url is None:
-            raise exceptions.MissingSchema
+            return render(request, 'reader.html')
 
         request_url = requests.get(url)
         if request_url.status_code == 200:
@@ -36,6 +36,9 @@ def index(request):
             nr_of_in_stock_items = product_feed.nr_of_in_stock_items
 
             custom_labels_data = product_feed.get_custom_labels_data()
+
+        else:
+            raise exceptions.MissingSchema
 
         return render(request, 'reader.html', {
             'feed': product_feed.feed,

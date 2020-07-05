@@ -3,26 +3,19 @@
 
 {% block body %}
 
-<br/>
-
 <div class="container is-fluid">
-
     <section class="section">
-            <div class="title is-4">Enter link to parse XML feed in RSS format:</div>
+        <div class="title is-4">Enter link to parse XML feed in RSS format:</div>
 
         <form class="form-inline">
             <div class="control has-icons-left has-text-centered">
-
-
                 <input type="text"
                        class="input is-info is-rounded "
                        placeholder="{{url}}"
                        name="url">
                 <span class="icon is-small is-left">
-                <i class="fas fa-link"></i>
-            </span>
-
-
+                    <i class="fas fa-link"></i>
+                </span>
             </div>
             <div class="has-text-centered" style="padding:10px">
                 <button type="submit" class="button is-medium is-info is-light">Submit input</button>
@@ -33,9 +26,6 @@
 
     <section>
 
-        {% if feed %}
-
-        {% if custom_labels_data %}
 
         {% if nr_of_items %}
         <div class="title is-5"> Number of items
@@ -50,11 +40,17 @@
         </div>
 
         <progress class="progress is-info" value="{{nr_of_in_stock_items}}" max="{{nr_of_items}}"></progress>
-
+        {% elif nr_of_in_stock_items == "" %}
+        <div class="title is-5">
+            <p class="has-text-danger">No 'in-stock' tag in feed.</p>
+        </div>
         {% endif %}
     </section>
 
     <section>
+
+        {% if custom_labels_data %}
+
         {% for custom_label in custom_labels_data %}
         {% if custom_label.custom_label_values %}
 
@@ -97,21 +93,17 @@
         {% endif %}
         {% endfor %}
 
-        {% endif %}
 
-        {% else %}
+        {% elif error_msg %}
 
+        <p class="title is-5 has-text-danger">{{ error_msg }}</p>
+
+        {% elif custom_labels_data == "" %}
         <br/>
+        <p class="title is-5 has-text-danger">No 'custom-label' tags in feed.</p>
 
-        <p class="has-text-danger">{{ error_msg }}</p>
-
+        {% endif %}
     </section>
 </div>
-
-{% endif %}
-
-
-{{ feed2 }}
-
 
 {% endblock %}

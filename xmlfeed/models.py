@@ -8,19 +8,16 @@ import pandas as pd
 class ProductFeed:
     def __init__(self, feed: feedparser.FeedParserDict):
         self.feed = feed
-        # TODO change variables to become dataframish
-        self.nr_of_items = len(feed.entries)
-        self.nr_of_in_stock_items = self.count_in_stock_items()
         self.df_entries = pd.DataFrame(data=feed.entries)
+        self.nr_of_items = len(self.df_entries)
+        self.nr_of_in_stock_items = self.count_in_stock_items(self.df_entries)
 
-    def count_in_stock_items(self):
-        nr_of_in_stock_items = 0
-        for entry in self.feed.entries:
-            availability = entry.get("g_availability")
-            # Note: if 'g_availability' not in entry, 'availability' would be = None
-            if availability == "in stock":
-                nr_of_in_stock_items = nr_of_in_stock_items + 1
-        return nr_of_in_stock_items
+    @staticmethod
+    def count_in_stock_items(df: pd.DataFrame):
+        nr_of_items_in_stock = ""
+        if 'g_availability' in df.columns:
+            nr_of_items_in_stock = sum(df['g_availability'] == 'in stock')
+        return nr_of_items_in_stock
 
     def get_labels_data(self, custom_label):
         entries_groupby_result = self.df_entries.groupby(custom_label)
@@ -29,7 +26,7 @@ class ProductFeed:
         for label_name, df_label_details in entries_groupby_result:
             if label_name:
                 nr_of_items = len(df_label_details)
-                nr_of_items_in_stock = sum(df_label_details['g_availability'] == 'in stock')
+                nr_of_items_in_stock = self.count_in_stock_items(df_label_details)
                 label_values = {'label_name': label_name,
                                 'nr_of_items': nr_of_items,
                                 'nr_of_items_in_stock': nr_of_items_in_stock}

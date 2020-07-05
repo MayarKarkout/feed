@@ -5,80 +5,108 @@
 
 <br/>
 
-<form class="form-inline">
+<div class="container is-fluid">
 
-    <div class="form-group mx-sm-3 mb-2">
+    <section class="section">
+            <div class="title is-4">Enter link to parse XML feed in RSS format:</div>
 
-        <input type="text" class="form-control" placeholder="paste link"
-
-               name="url">
-
-    </div>
-
-    <button type="submit" class="btn btn-primary mb-2">Search</button>
-
-</form>
-
-{% if feed %}
-
-<h2>{{ feed.feed.title }}</h2>
-
-{% if custom_labels_data %}
-
-{% if nr_of_items %}
-<p> Number of items: {{nr_of_items}} </p>
-{% endif %}
-
-{% if nr_of_in_stock_items %}
-<p> Number of in-stock items: {{nr_of_in_stock_items}} </p>
-{% endif %}
-
-{% for custom_label in custom_labels_data %}
-{% if custom_label.custom_label_values %}
-
-<div class="card">
-    <div class="row">
-        <div class="card-header">
-            {{ custom_label.custom_label }} labels:
-        </div>
-
-        {% for label in custom_label.custom_label_values %}
+        <form class="form-inline">
+            <div class="control has-icons-left has-text-centered">
 
 
-        <div class="column">
-            <div class="card">
+                <input type="text"
+                       class="input is-info is-rounded "
+                       placeholder="{{url}}"
+                       name="url">
+                <span class="icon is-small is-left">
+                <i class="fas fa-link"></i>
+            </span>
 
-                <div class="card-header">
-
-                    {{ label.label_name }}
-
-                </div>
-
-                <div class="card-body">
-
-                    <h5 class="card-text">Number of items: {{ label.nr_of_items }}</h5>
-
-                    <p class="card-text">Number of items in stock: {{ label.nr_of_items_in_stock }}</p>
-
-                </div>
 
             </div>
+            <div class="has-text-centered" style="padding:10px">
+                <button type="submit" class="button is-medium is-info is-light">Submit input</button>
+                <button type="reset" class="button is-medium is-light">Clear input</button>
+            </div>
+        </form>
+    </section>
+
+    <section>
+
+        {% if feed %}
+
+        {% if custom_labels_data %}
+
+        {% if nr_of_items %}
+        <div class="title is-5"> Number of items
+            <p class="has-text-info	">{{nr_of_items}}</p>
+
         </div>
+        {% endif %}
+
+        {% if nr_of_in_stock_items %}
+        <div class="title is-5"> Number of in-stock items
+            <p class="has-text-info	">{{nr_of_in_stock_items}}</p>
+        </div>
+
+        <progress class="progress is-info" value="{{nr_of_in_stock_items}}" max="{{nr_of_items}}"></progress>
+
+        {% endif %}
+    </section>
+
+    <section>
+        {% for custom_label in custom_labels_data %}
+        {% if custom_label.custom_label_values %}
+
+        <div class="section">
+            <div class="title is-4">
+                {{ custom_label.custom_label }} labels:
+            </div>
+
+            <div class="columns is-vcentered">
+                <div class="column">
+                    <p class="notification is-info">Label name</p>
+                </div>
+                <div class="column has-text-centered">
+                    <p class="notification is-info">Number of items</p>
+                </div>
+                <div class="column has-text-centered">
+                    <p class="notification is-info">Number of items in stock</p>
+                </div>
+            </div>
+
+            {% for label in custom_label.custom_label_values %}
+
+
+            <div class="columns is-vcentered">
+                <div class="column">
+                    <p class="notification has-background-info-light ">{{ label.label_name }}</p>
+                </div>
+                <div class="column has-text-centered">
+                    <p class="notification has-background-info-light">{{ label.nr_of_items }}</p>
+                </div>
+                <div class="column has-text-centered">
+                    <p class="notification has-background-info-light">{{ label.nr_of_items_in_stock }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <!--</div><p>{{ entry.published }}</p>-->
+
+        {% endif %}
         {% endfor %}
-    </div>
+
+        {% endif %}
+
+        {% else %}
+
+        <br/>
+
+        <p class="has-text-danger">{{ error_msg }}</p>
+
+    </section>
 </div>
-<!--</div><p>{{ entry.published }}</p>-->
-
-{% endif %}
-{% endfor %}
-
-{% endif %}
-
-{% else %}
-
-<br/>
-
-<p>{{ error_msg }}</p>
 
 {% endif %}
 

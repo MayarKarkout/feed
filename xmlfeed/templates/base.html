@@ -2,27 +2,29 @@
 
 <head>
 
-<title>Django RSS Reader</title>
+    <title>Django RSS Reader</title>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
 </head>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 
-<ul class="navbar-nav">
+<nav class="navbar is-link" role="navigation" aria-label="main navigation">
 
-<li class="nav-item active">
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/">Home</a>
 
-<a class="nav-link" href="/">Home</a>
-
-</ul>
-
+      <a class="navbar-item">
+        Documentation
+      </a>
+    </div>
+  </div>
 </nav>
-
 <body>
 
 {% block body %}{% endblock %}

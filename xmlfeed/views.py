@@ -41,6 +41,7 @@ def index(request):
             raise exceptions.MissingSchema
 
         return render(request, 'reader.html', {
+            'url': url,
             'feed': product_feed.feed,
             'nr_of_items': nr_of_items,
             'nr_of_in_stock_items': nr_of_in_stock_items,

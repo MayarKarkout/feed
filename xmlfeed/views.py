@@ -40,8 +40,9 @@ def index(request):
                     'custom_labels_data': custom_labels_data
                 }
 
-    except exceptions.MissingSchema:
-        data = {'error_msg': 'Please enter a valid URL.'}
+    except exceptions.RequestException as ex:
+        data = {'error_msg': 'Please enter a valid URL.',
+                'sub_error_msg': f'Exception occured: {ex}.'}
 
     except ValueError:
         data = {'error_msg': 'File formatting error (missing "item" tag).'}
